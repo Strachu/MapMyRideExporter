@@ -35,11 +35,16 @@ panel of this page.
 
 # Libraries
 The application uses the following libraries:
-**TODO**
+- [CommandLineParser 2.1.1](https://github.com/gsscoder/commandline) command line parsing.
+- [Newtonsoft.Json](http://www.newtonsoft.com/json) - JSON parsing.
+- [NUnit 2.6.4](http://www.nunit.org/) as a unit test framework.
+- [FluentAssertions 4.19.3](http://fluentassertions.com/) assertions helpers.
 
 # Tools
 During the creation of the application the following tools were used:
-**TODO**
+- MonoDevelop 6.2
+- [Git](https://git-scm.com/)
+- [Git Extensions](https://github.com/gitextensions/gitextensions)
 
 # License
 MapMyRideExporter is a free software distributed under the GNU LGPL 3 or later license.
