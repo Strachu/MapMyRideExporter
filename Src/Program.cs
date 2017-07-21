@@ -35,9 +35,12 @@ namespace MapMyRideExporter
 			var workouts = (await GetAllWorkoutsToExport(options.StartDate, options.EndDate)).ToList();
 			Console.WriteLine($"Retrieved {workouts.Count} workouts.");
 
-			Console.WriteLine($"Exporting workouts to {options.DestinationPath}...");
-			await ExportWorkoutsTo(workouts, options.DestinationPath);
-			Console.WriteLine($"Finished exporting workouts.");
+			if(workouts.Any())
+			{
+				Console.WriteLine($"Exporting workouts to {options.DestinationPath}...");
+				await ExportWorkoutsTo(workouts, options.DestinationPath);
+				Console.WriteLine($"Finished exporting workouts.");
+			}
 
 			return 0;
 		}
@@ -72,6 +75,7 @@ namespace MapMyRideExporter
 
 			foreach(var workout in workouts)
 			{
+				// TODO Append also start time to file name
 				var fileName = $"{workout.WorkoutDate.ToString("yyyy-MM-dd")}_{workout.WorkoutId}.tcx";
 				var filePath = Path.Combine(destinationPath, fileName);
 
