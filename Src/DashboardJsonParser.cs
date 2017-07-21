@@ -14,11 +14,11 @@ namespace MapMyRideExporter
 			var workout_data = root["workout_data"];
 			var workouts = workout_data["workouts"];
 
-			return workouts.Cast<JProperty>().Select(x => new WorkoutSummary
+			return workouts.Cast<JProperty>().SelectMany(x => x.Value.Select(y => new WorkoutSummary
 			{
 				WorkoutDate = DateTime.Parse(x.Name, CultureInfo.InvariantCulture),
-				WorkoutUrl = x.Value[0]["view_url"].ToString()
-			});
+				WorkoutUrl = y["view_url"].ToString()
+			}));
 		}
 	}
 }
