@@ -16,9 +16,16 @@ namespace MapMyRideExporter
 
 			return workouts.Cast<JProperty>().SelectMany(x => x.Value.Select(y => new WorkoutSummary
 			{
+				WorkoutId = ExtractIdFromUrl(y["view_url"].ToString()),
 				WorkoutDate = DateTime.Parse(x.Name, CultureInfo.InvariantCulture),
-				WorkoutUrl = y["view_url"].ToString()
 			}));
+		}
+
+		private string ExtractIdFromUrl(string url)
+		{
+			var tokens = url.Split('/');
+
+			return tokens.Last();
 		}
 	}
 }

@@ -4,8 +4,8 @@ namespace MapMyRideExporter
 {
 	public class WorkoutSummary
 	{
-		public DateTime WorkoutDate { get; set; }
+		public string WorkoutId { get; set; }
 
-		public string WorkoutUrl { get; set; }
+		public DateTime WorkoutDate { get; set; }
 	}
 }

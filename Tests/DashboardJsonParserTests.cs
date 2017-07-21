@@ -24,28 +24,28 @@ namespace MapMyRideExporter.Tests
 			{
 				new WorkoutSummary
 				{
+					WorkoutId = "1703314241",
 					WorkoutDate = new DateTime(2016, 8, 25),
-					WorkoutUrl = "/workout/1703314241"
 				},
 				new WorkoutSummary
 				{
+					WorkoutId = "1700659904",
 					WorkoutDate = new DateTime(2016, 8, 24),
-					WorkoutUrl = "/workout/1700659904"
 				},
 				new WorkoutSummary
 				{
+					WorkoutId = "1707528353",
 					WorkoutDate = new DateTime(2016, 8, 27),
-					WorkoutUrl = "/workout/1707528353"
 				},
 				new WorkoutSummary
 				{
+					WorkoutId = "1709715236",
 					WorkoutDate = new DateTime(2016, 8, 28),
-					WorkoutUrl = "/workout/1709715236"
 				},
 				new WorkoutSummary
 				{
+					WorkoutId = "1721324126",
 					WorkoutDate = new DateTime(2016, 9, 02),
-					WorkoutUrl = "/workout/1721324126"
 				}
 			};
 

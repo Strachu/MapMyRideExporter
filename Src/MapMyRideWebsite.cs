@@ -6,6 +6,7 @@ using Newtonsoft.Json.Linq;
 using System.Net;
 using System.Text;
 using System.Linq;
+using System.IO;
 
 namespace MapMyRideExporter
 {
@@ -43,6 +44,11 @@ namespace MapMyRideExporter
 			var json = await mHttpClient.GetStringAsync($"{WebsiteUrl}/workouts/dashboard.json?month={month.Month}&year={month.Year}");
 
 			return mDashboardParser.ParseWorkouts(json).OrderBy(x => x.WorkoutDate);
+		}
+
+		public Task<Stream> DownloadTcxFile(WorkoutSummary workout)
+		{
+			return mHttpClient.GetStreamAsync($"{WebsiteUrl}/workout/export/{workout.WorkoutId}/tcx");
 		}
 
 		public void Dispose()

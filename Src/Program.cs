@@ -3,6 +3,7 @@ using CommandLine;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 
 namespace MapMyRideExporter
 {
@@ -34,7 +35,9 @@ namespace MapMyRideExporter
 			var workouts = (await GetAllWorkoutsToExport(options.StartDate, options.EndDate)).ToList();
 			Console.WriteLine($"Retrieved {workouts.Count} workouts.");
 
-			// TODO Download TCX
+			Console.WriteLine($"Exporting workouts to {options.DestinationPath}...");
+			await ExportWorkoutsTo(workouts, options.DestinationPath);
+			Console.WriteLine($"Finished exporting workouts.");
 
 			return 0;
 		}
@@ -61,6 +64,27 @@ namespace MapMyRideExporter
 			}
 
 			return result;
+		}
+
+		private static async Task ExportWorkoutsTo(IEnumerable<WorkoutSummary> workouts, string destinationPath)
+		{
+			Directory.CreateDirectory(destinationPath);
+
+			foreach(var workout in workouts)
+			{
+				var fileName = $"{workout.WorkoutDate.ToString("yyyy-MM-dd")}_{workout.WorkoutId}.tcx";
+				var filePath = Path.Combine(destinationPath, fileName);
+
+				Console.WriteLine($"Downloading workout {workout.WorkoutId} done on {workout.WorkoutDate.ToShortDateString()} to {filePath}");
+
+				using(var tcxStream = await mMapMyRide.DownloadTcxFile(workout))
+				using(var destinationStream = File.OpenWrite(filePath))
+				{
+					await tcxStream.CopyToAsync(destinationStream);
+				}
+
+				Console.WriteLine($"Workout {workout.WorkoutId} done on {workout.WorkoutDate.ToShortDateString()} downloaded.");
+			}
 		}
 	}
 }
