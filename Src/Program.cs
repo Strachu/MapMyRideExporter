@@ -1,6 +1,8 @@
 ﻿using System;
 using CommandLine;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MapMyRideExporter
 {
@@ -21,18 +23,36 @@ namespace MapMyRideExporter
 
 		private static async Task<int> Run(CommandLineOptions options)
 		{
+			Console.WriteLine($"Logging in as {options.Login}...");
 			await mMapMyRide.Login(options.Login, options.Password);
+			Console.WriteLine($"Successfully logged as {options.Login}...");
+
+			Console.WriteLine($"Retrieving workout list from {options.StartDate.ToShortDateString()} to {options.EndDate.ToShortDateString()}...");
+			var workouts = (await GetAllWorkoutsToExport(options.StartDate, options.EndDate)).ToList();
+			Console.WriteLine($"Retrieved {workouts.Count} workouts.");
+
+			// TODO Download TCX
+
+			return 0;
+		}
+
+		private static async Task<IEnumerable<WorkoutSummary>> GetAllWorkoutsToExport(DateTime startDate, DateTime endDate)
+		{
+			var result = new List<WorkoutSummary>();
 			
-			for(var currentDate = options.StartDate; currentDate <= options.EndDate; currentDate = currentDate.AddMonths(1))
+			for(var currentDate = startDate; currentDate <= endDate; currentDate = currentDate.AddMonths(1))
 			{
 				var workouts = await mMapMyRide.GetWorkoutsDoneInMonth(currentDate);
 
-				// TODO Download TCX
-
-				// TODO Filter out partial months
+				var clippedWorkout = workouts.Where(workout => 
+					workout.WorkoutDate >= currentDate &&
+					workout.WorkoutDate <= endDate &&
+					workout.WorkoutDate < currentDate.AddMonths(1));
+				
+				result.AddRange(clippedWorkout);
 			}
 
-			return 0;
+			return result;
 		}
 	}
 }
