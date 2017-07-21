@@ -6,7 +6,7 @@ namespace MapMyRideExporter
 {
 	class MainClass
 	{
-		private static IMapMyRideWebsite mMapMyRide = new MapMyRideWebsite();
+		private static IMapMyRideWebsite mMapMyRide = new MapMyRideWebsite(new DashboardJsonParser());
 		
 		public static int Main(string[] args)
 		{

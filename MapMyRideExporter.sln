@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapMyRideExporter", "Src\MapMyRideExporter.csproj", "{631CBDF3-6CE1-445F-993D-CD54F3D66CA8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapMyRideExporter.Tests", "Tests\MapMyRideExporter.Tests.csproj", "{104A68CB-63F8-4DC8-860D-7176F6559F4F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -13,5 +15,9 @@ Global
 		{631CBDF3-6CE1-445F-993D-CD54F3D66CA8}.Debug|x86.Build.0 = Debug|x86
 		{631CBDF3-6CE1-445F-993D-CD54F3D66CA8}.Release|x86.ActiveCfg = Release|x86
 		{631CBDF3-6CE1-445F-993D-CD54F3D66CA8}.Release|x86.Build.0 = Release|x86
+		{104A68CB-63F8-4DC8-860D-7176F6559F4F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{104A68CB-63F8-4DC8-860D-7176F6559F4F}.Debug|x86.Build.0 = Debug|Any CPU
+		{104A68CB-63F8-4DC8-860D-7176F6559F4F}.Release|x86.ActiveCfg = Release|Any CPU
+		{104A68CB-63F8-4DC8-860D-7176F6559F4F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

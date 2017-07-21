@@ -48,6 +48,8 @@
     <Compile Include="IMapMyRideWebsite.cs" />
     <Compile Include="WorkoutSummary.cs" />
     <Compile Include="MapMyRideWebsite.cs" />
+    <Compile Include="IDashboardJsonParser.cs" />
+    <Compile Include="DashboardJsonParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

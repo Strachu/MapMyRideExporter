@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using System.Net;
 using System.Text;
+using System.Linq;
 
 namespace MapMyRideExporter
 {
@@ -12,7 +13,13 @@ namespace MapMyRideExporter
 	{
 		private const string WebsiteUrl = "https://www.mapmyride.com";
 
+		private readonly IDashboardJsonParser mDashboardParser;
 		private readonly HttpClient mHttpClient = new HttpClient();
+
+		public MapMyRideWebsite(IDashboardJsonParser dashboardParser)
+		{
+			mDashboardParser = dashboardParser;
+		}
 
 		public async Task Login(string userName, string password)
 		{
@@ -33,14 +40,9 @@ namespace MapMyRideExporter
 
 		public async Task<IEnumerable<WorkoutSummary>> GetWorkoutsDoneInMonth(DateTime month)
 		{
-			var result = await mHttpClient
-				.GetStringAsync($"https://www.mapmyride.com/workouts/dashboard.json?month={month.Month}&year={month.Year}");
+			var json = await mHttpClient.GetStringAsync($"{WebsiteUrl}/workouts/dashboard.json?month={month.Month}&year={month.Year}");
 
-			Console.WriteLine(result);
-
-			var json = JObject.Parse(result);
-
-			return new WorkoutSummary[0];
+			return mDashboardParser.ParseWorkouts(json).OrderBy(x => x.WorkoutDate);
 		}
 
 		public void Dispose()
