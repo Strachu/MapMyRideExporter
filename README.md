@@ -1,5 +1,5 @@
 # MapMyRideExporter
-**MapMyRideExporter** is a command line application for exporting many MapMyRide activities at once to TCX files.
+**MapMyRideExporter** is a command line application for exporting many [MapMyRide](http://www.mapmyride.com/us/) activities at once to TCX files.
 
 # Features
 - Automatic exporting of possibly hundreds of activities to a local disk as TCX files. No need to export every single workout manually.
