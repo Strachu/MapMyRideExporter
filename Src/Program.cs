@@ -8,17 +8,20 @@ namespace MapMyRideExporter
 {
 	class MainClass
 	{
-		private static IMapMyRideWebsite mMapMyRide = new MapMyRideWebsite(new DashboardJsonParser());
+		private static readonly MapMyRideWebsite mMapMyRide = new MapMyRideWebsite(new DashboardJsonParser());
 		
 		public static int Main(string[] args)
 		{
 			var parsingResult = new Parser(x => x.HelpWriter = null).ParseArguments<CommandLineOptions>(args);
 
-			return parsingResult.MapResult(x => Run(x).Result, errors =>
+			using(mMapMyRide)
 			{
-				Console.WriteLine(CommandLineOptions.GetHelpText(parsingResult));
-				return 1;
-			});
+				return parsingResult.MapResult(x => Run(x).Result, errors =>
+				{
+					Console.WriteLine(CommandLineOptions.GetHelpText(parsingResult));
+					return 1;
+				});
+			}
 		}
 
 		private static async Task<int> Run(CommandLineOptions options)
