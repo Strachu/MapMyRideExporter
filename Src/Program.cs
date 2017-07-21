@@ -39,17 +39,22 @@ namespace MapMyRideExporter
 		private static async Task<IEnumerable<WorkoutSummary>> GetAllWorkoutsToExport(DateTime startDate, DateTime endDate)
 		{
 			var result = new List<WorkoutSummary>();
-			
-			for(var currentDate = startDate; currentDate <= endDate; currentDate = currentDate.AddMonths(1))
+
+			var currentDate = startDate;
+			while(currentDate <= endDate)
 			{
+				var beginningOfNextMonth = new DateTime(currentDate.AddMonths(1).Year, currentDate.AddMonths(1).Month, day: 1);
+				
 				var workouts = await mMapMyRide.GetWorkoutsDoneInMonth(currentDate);
 
-				var clippedWorkout = workouts.Where(workout => 
+				var clippedWorkouts = workouts.Where(workout => 
 					workout.WorkoutDate >= currentDate &&
 					workout.WorkoutDate <= endDate &&
-					workout.WorkoutDate < currentDate.AddMonths(1));
+				   workout.WorkoutDate < beginningOfNextMonth); // TODO Make a test case for the case where startdate is not at the beginning of a month
 				
-				result.AddRange(clippedWorkout);
+				result.AddRange(clippedWorkouts);
+
+				currentDate = beginningOfNextMonth;
 			}
 
 			return result;
